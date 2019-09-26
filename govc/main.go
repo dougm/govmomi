@@ -86,6 +86,7 @@ import (
 	_ "github.com/vmware/govmomi/govc/tags/association"
 	_ "github.com/vmware/govmomi/govc/tags/category"
 	_ "github.com/vmware/govmomi/govc/task"
+	_ "github.com/vmware/govmomi/govc/tree"
 	_ "github.com/vmware/govmomi/govc/vapp"
 	_ "github.com/vmware/govmomi/govc/vcsa/log"
 	_ "github.com/vmware/govmomi/govc/version"
