@@ -72,3 +72,7 @@ func (flag *AuthFlag) Process(ctx context.Context) error {
 func (flag *AuthFlag) Auth() types.BaseGuestAuthentication {
 	return &flag.auth
 }
+
+func (flag *AuthFlag) IsSet() bool {
+	return flag.auth.Username != "" && flag.auth.Password != ""
+}

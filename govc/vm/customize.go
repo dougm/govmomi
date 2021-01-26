@@ -25,12 +25,15 @@ import (
 
 	"github.com/vmware/govmomi/govc/cli"
 	"github.com/vmware/govmomi/govc/flags"
+	vmguest "github.com/vmware/govmomi/govc/vm/guest"
+	"github.com/vmware/govmomi/guest"
 	"github.com/vmware/govmomi/object"
 	"github.com/vmware/govmomi/vim25/types"
 )
 
 type customize struct {
 	*flags.VirtualMachineFlag
+	*vmguest.AuthFlag
 
 	alc       int
 	prefix    types.CustomizationPrefixName
@@ -53,6 +56,8 @@ func init() {
 func (cmd *customize) Register(ctx context.Context, f *flag.FlagSet) {
 	cmd.VirtualMachineFlag, ctx = flags.NewVirtualMachineFlag(ctx)
 	cmd.VirtualMachineFlag.Register(ctx, f)
+	cmd.AuthFlag = new(vmguest.AuthFlag)
+	cmd.AuthFlag.Register(ctx, f)
 
 	f.IntVar(&cmd.alc, "auto-login", 0, "Number of times the VM should automatically login as an administrator")
 	f.StringVar(&cmd.prefix.Base, "prefix", "", "Host name generator prefix")
@@ -72,6 +77,13 @@ func (cmd *customize) Register(ctx context.Context, f *flag.FlagSet) {
 	f.Var(&cmd.dnsserver, "dns-server", "DNS server")
 	cmd.dnsserver = nil
 	f.StringVar(&cmd.kind, "type", "Linux", "Customization type if spec NAME is not specified (Linux|Windows)")
+}
+
+func (cmd *customize) Process(ctx context.Context) error {
+	if err := cmd.AuthFlag.Process(ctx); err != nil {
+		return err
+	}
+	return cmd.VirtualMachineFlag.Process(ctx)
 }
 
 func (cmd *customize) Usage() string {
@@ -299,6 +311,16 @@ func (cmd *customize) Run(ctx context.Context, f *flag.FlagSet) error {
 			nic.Adapter.IpV6Spec = new(types.CustomizationIPSettingsIpV6AddressSpec)
 		}
 		nic.Adapter.IpV6Spec.Ip = append(nic.Adapter.IpV6Spec.Ip, ipconfig...)
+	}
+
+	if cmd.AuthFlag.IsSet() {
+		m := guest.NewCustomizationManager(vm.Client(), vm.Reference())
+		task, err := m.Customize(ctx, cmd.Auth(), *spec)
+		if err != nil {
+			return err
+		}
+
+		return task.Wait(ctx)
 	}
 
 	task, err := vm.Customize(ctx, *spec)
