@@ -378,6 +378,18 @@ type MetricSeries struct {
 	Value    []int64
 }
 
+// Average of the MetricSeries.Value(s)
+func (s *MetricSeries) Average() int64 {
+	if len(s.Value) == 0 {
+		return 0
+	}
+	var v int64
+	for i := range s.Value {
+		v += s.Value[i]
+	}
+	return v / int64(len(s.Value))
+}
+
 func (s *MetricSeries) Format(val int64) string {
 	switch types.PerformanceManagerUnit(s.unit) {
 	case types.PerformanceManagerUnitPercent:
