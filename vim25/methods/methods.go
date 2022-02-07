@@ -14703,6 +14703,46 @@ func RetrieveVStorageObjectState(ctx context.Context, r soap.RoundTripper, req *
 	return resBody.Res, nil
 }
 
+type RetrieveVgpuDeviceInfoBody struct {
+	Req    *types.RetrieveVgpuDeviceInfo         `xml:"urn:vim25 RetrieveVgpuDeviceInfo,omitempty"`
+	Res    *types.RetrieveVgpuDeviceInfoResponse `xml:"RetrieveVgpuDeviceInfoResponse,omitempty"`
+	Fault_ *soap.Fault                           `xml:"http://schemas.xmlsoap.org/soap/envelope/ Fault,omitempty"`
+}
+
+func (b *RetrieveVgpuDeviceInfoBody) Fault() *soap.Fault { return b.Fault_ }
+
+func RetrieveVgpuDeviceInfo(ctx context.Context, r soap.RoundTripper, req *types.RetrieveVgpuDeviceInfo) (*types.RetrieveVgpuDeviceInfoResponse, error) {
+	var reqBody, resBody RetrieveVgpuDeviceInfoBody
+
+	reqBody.Req = req
+
+	if err := r.RoundTrip(ctx, &reqBody, &resBody); err != nil {
+		return nil, err
+	}
+
+	return resBody.Res, nil
+}
+
+type RetrieveVgpuProfileInfoBody struct {
+	Req    *types.RetrieveVgpuProfileInfo         `xml:"urn:vim25 RetrieveVgpuProfileInfo,omitempty"`
+	Res    *types.RetrieveVgpuProfileInfoResponse `xml:"RetrieveVgpuProfileInfoResponse,omitempty"`
+	Fault_ *soap.Fault                            `xml:"http://schemas.xmlsoap.org/soap/envelope/ Fault,omitempty"`
+}
+
+func (b *RetrieveVgpuProfileInfoBody) Fault() *soap.Fault { return b.Fault_ }
+
+func RetrieveVgpuProfileInfo(ctx context.Context, r soap.RoundTripper, req *types.RetrieveVgpuProfileInfo) (*types.RetrieveVgpuProfileInfoResponse, error) {
+	var reqBody, resBody RetrieveVgpuProfileInfoBody
+
+	reqBody.Req = req
+
+	if err := r.RoundTrip(ctx, &reqBody, &resBody); err != nil {
+		return nil, err
+	}
+
+	return resBody.Res, nil
+}
+
 type RevertToCurrentSnapshot_TaskBody struct {
 	Req    *types.RevertToCurrentSnapshot_Task         `xml:"urn:vim25 RevertToCurrentSnapshot_Task,omitempty"`
 	Res    *types.RevertToCurrentSnapshot_TaskResponse `xml:"RevertToCurrentSnapshot_TaskResponse,omitempty"`

@@ -4412,6 +4412,14 @@ func init() {
 	t["ArrayOfNetStackInstanceProfile"] = reflect.TypeOf((*ArrayOfNetStackInstanceProfile)(nil)).Elem()
 }
 
+type ArrayOfNoPermissionEntityPrivileges struct {
+	NoPermissionEntityPrivileges []NoPermissionEntityPrivileges `xml:"NoPermissionEntityPrivileges,omitempty"`
+}
+
+func init() {
+	t["ArrayOfNoPermissionEntityPrivileges"] = reflect.TypeOf((*ArrayOfNoPermissionEntityPrivileges)(nil)).Elem()
+}
+
 type ArrayOfNsxHostVNicProfile struct {
 	NsxHostVNicProfile []NsxHostVNicProfile `xml:"NsxHostVNicProfile,omitempty"`
 }
@@ -5564,6 +5572,14 @@ func init() {
 	t["ArrayOfVirtualMachineCdromInfo"] = reflect.TypeOf((*ArrayOfVirtualMachineCdromInfo)(nil)).Elem()
 }
 
+type ArrayOfVirtualMachineCertThumbprint struct {
+	VirtualMachineCertThumbprint []VirtualMachineCertThumbprint `xml:"VirtualMachineCertThumbprint,omitempty"`
+}
+
+func init() {
+	t["ArrayOfVirtualMachineCertThumbprint"] = reflect.TypeOf((*ArrayOfVirtualMachineCertThumbprint)(nil)).Elem()
+}
+
 type ArrayOfVirtualMachineConfigInfoDatastoreUrlPair struct {
 	VirtualMachineConfigInfoDatastoreUrlPair []VirtualMachineConfigInfoDatastoreUrlPair `xml:"VirtualMachineConfigInfoDatastoreUrlPair,omitempty"`
 }
@@ -5930,6 +5946,22 @@ type ArrayOfVirtualMachineVcpuConfig struct {
 
 func init() {
 	t["ArrayOfVirtualMachineVcpuConfig"] = reflect.TypeOf((*ArrayOfVirtualMachineVcpuConfig)(nil)).Elem()
+}
+
+type ArrayOfVirtualMachineVgpuDeviceInfo struct {
+	VirtualMachineVgpuDeviceInfo []VirtualMachineVgpuDeviceInfo `xml:"VirtualMachineVgpuDeviceInfo,omitempty"`
+}
+
+func init() {
+	t["ArrayOfVirtualMachineVgpuDeviceInfo"] = reflect.TypeOf((*ArrayOfVirtualMachineVgpuDeviceInfo)(nil)).Elem()
+}
+
+type ArrayOfVirtualMachineVgpuProfileInfo struct {
+	VirtualMachineVgpuProfileInfo []VirtualMachineVgpuProfileInfo `xml:"VirtualMachineVgpuProfileInfo,omitempty"`
+}
+
+func init() {
+	t["ArrayOfVirtualMachineVgpuProfileInfo"] = reflect.TypeOf((*ArrayOfVirtualMachineVgpuProfileInfo)(nil)).Elem()
 }
 
 type ArrayOfVirtualNicManagerNetConfig struct {
@@ -7336,6 +7368,7 @@ type Capability struct {
 	HostSeedingSupported             *bool            `xml:"hostSeedingSupported"`
 	ScalableSharesSupported          *bool            `xml:"scalableSharesSupported"`
 	HadcsSupported                   *bool            `xml:"hadcsSupported"`
+	ConfigMgmtSupported              *bool            `xml:"configMgmtSupported"`
 }
 
 func init() {
@@ -9678,6 +9711,7 @@ type ComputeResourceConfigSpec struct {
 	DefaultHardwareVersionKey string               `xml:"defaultHardwareVersionKey,omitempty"`
 	DesiredSoftwareSpec       *DesiredSoftwareSpec `xml:"desiredSoftwareSpec,omitempty"`
 	MaximumHardwareVersionKey string               `xml:"maximumHardwareVersionKey,omitempty"`
+	EnableConfigManager       *bool                `xml:"enableConfigManager"`
 }
 
 func init() {
@@ -9773,6 +9807,8 @@ type ConfigTarget struct {
 	SgxTargetInfo                          *VirtualMachineSgxTargetInfo                `xml:"sgxTargetInfo,omitempty"`
 	PrecisionClockInfo                     []VirtualMachinePrecisionClockInfo          `xml:"precisionClockInfo,omitempty"`
 	SevSupported                           *bool                                       `xml:"sevSupported"`
+	VgpuDeviceInfo                         []VirtualMachineVgpuDeviceInfo              `xml:"vgpuDeviceInfo,omitempty"`
+	VgpuProfileInfo                        []VirtualMachineVgpuProfileInfo             `xml:"vgpuProfileInfo,omitempty"`
 }
 
 func init() {
@@ -33736,12 +33772,24 @@ func init() {
 type NoPermission struct {
 	SecurityError
 
-	Object      ManagedObjectReference `xml:"object"`
-	PrivilegeId string                 `xml:"privilegeId"`
+	Object            ManagedObjectReference         `xml:"object"`
+	PrivilegeId       string                         `xml:"privilegeId"`
+	MissingPrivileges []NoPermissionEntityPrivileges `xml:"missingPrivileges,omitempty"`
 }
 
 func init() {
 	t["NoPermission"] = reflect.TypeOf((*NoPermission)(nil)).Elem()
+}
+
+type NoPermissionEntityPrivileges struct {
+	DynamicData
+
+	Entity       ManagedObjectReference `xml:"entity"`
+	PrivilegeIds []string               `xml:"privilegeIds,omitempty"`
+}
+
+func init() {
+	t["NoPermissionEntityPrivileges"] = reflect.TypeOf((*NoPermissionEntityPrivileges)(nil)).Elem()
 }
 
 type NoPermissionFault BaseNoPermission
@@ -43932,6 +43980,42 @@ type RetrieveVStorageObjectStateResponse struct {
 	Returnval VStorageObjectStateInfo `xml:"returnval"`
 }
 
+type RetrieveVgpuDeviceInfo RetrieveVgpuDeviceInfoRequestType
+
+func init() {
+	t["RetrieveVgpuDeviceInfo"] = reflect.TypeOf((*RetrieveVgpuDeviceInfo)(nil)).Elem()
+}
+
+type RetrieveVgpuDeviceInfoRequestType struct {
+	This ManagedObjectReference `xml:"_this"`
+}
+
+func init() {
+	t["RetrieveVgpuDeviceInfoRequestType"] = reflect.TypeOf((*RetrieveVgpuDeviceInfoRequestType)(nil)).Elem()
+}
+
+type RetrieveVgpuDeviceInfoResponse struct {
+	Returnval []VirtualMachineVgpuDeviceInfo `xml:"returnval,omitempty"`
+}
+
+type RetrieveVgpuProfileInfo RetrieveVgpuProfileInfoRequestType
+
+func init() {
+	t["RetrieveVgpuProfileInfo"] = reflect.TypeOf((*RetrieveVgpuProfileInfo)(nil)).Elem()
+}
+
+type RetrieveVgpuProfileInfoRequestType struct {
+	This ManagedObjectReference `xml:"_this"`
+}
+
+func init() {
+	t["RetrieveVgpuProfileInfoRequestType"] = reflect.TypeOf((*RetrieveVgpuProfileInfoRequestType)(nil)).Elem()
+}
+
+type RetrieveVgpuProfileInfoResponse struct {
+	Returnval []VirtualMachineVgpuProfileInfo `xml:"returnval,omitempty"`
+}
+
 type RevertToCurrentSnapshotRequestType struct {
 	This            ManagedObjectReference  `xml:"_this"`
 	Host            *ManagedObjectReference `xml:"host,omitempty"`
@@ -44993,10 +45077,11 @@ type SessionIsActiveResponse struct {
 type SessionManagerGenericServiceTicket struct {
 	DynamicData
 
-	Id            string `xml:"id"`
-	HostName      string `xml:"hostName,omitempty"`
-	SslThumbprint string `xml:"sslThumbprint,omitempty"`
-	TicketType    string `xml:"ticketType,omitempty"`
+	Id                 string                         `xml:"id"`
+	HostName           string                         `xml:"hostName,omitempty"`
+	SslThumbprint      string                         `xml:"sslThumbprint,omitempty"`
+	CertThumbprintList []VirtualMachineCertThumbprint `xml:"certThumbprintList,omitempty"`
+	TicketType         string                         `xml:"ticketType,omitempty"`
 }
 
 func init() {
@@ -52866,6 +52951,17 @@ func init() {
 	t["VirtualMachineCdromInfo"] = reflect.TypeOf((*VirtualMachineCdromInfo)(nil)).Elem()
 }
 
+type VirtualMachineCertThumbprint struct {
+	DynamicData
+
+	Thumbprint    string `xml:"thumbprint"`
+	HashAlgorithm string `xml:"hashAlgorithm,omitempty"`
+}
+
+func init() {
+	t["VirtualMachineCertThumbprint"] = reflect.TypeOf((*VirtualMachineCertThumbprint)(nil)).Elem()
+}
+
 type VirtualMachineCloneSpec struct {
 	DynamicData
 
@@ -52957,6 +53053,8 @@ type VirtualMachineConfigInfo struct {
 	GuestMonitoringModeInfo      *VirtualMachineGuestMonitoringModeInfo     `xml:"guestMonitoringModeInfo,omitempty"`
 	SevEnabled                   *bool                                      `xml:"sevEnabled"`
 	PmemFailoverEnabled          *bool                                      `xml:"pmemFailoverEnabled"`
+	VmxStatsCollectionEnabled    *bool                                      `xml:"vmxStatsCollectionEnabled"`
+	VmOpNotificationToAppEnabled *bool                                      `xml:"vmOpNotificationToAppEnabled"`
 	Pmem                         *VirtualMachineVirtualPMem                 `xml:"pmem,omitempty"`
 }
 
@@ -53092,6 +53190,8 @@ type VirtualMachineConfigSpec struct {
 	GuestMonitoringModeInfo      *VirtualMachineGuestMonitoringModeInfo `xml:"guestMonitoringModeInfo,omitempty"`
 	SevEnabled                   *bool                                  `xml:"sevEnabled"`
 	PmemFailoverEnabled          *bool                                  `xml:"pmemFailoverEnabled"`
+	VmxStatsCollectionEnabled    *bool                                  `xml:"vmxStatsCollectionEnabled"`
+	VmOpNotificationToAppEnabled *bool                                  `xml:"vmOpNotificationToAppEnabled"`
 	Pmem                         *VirtualMachineVirtualPMem             `xml:"pmem,omitempty"`
 }
 
@@ -54170,12 +54270,13 @@ func init() {
 type VirtualMachineTicket struct {
 	DynamicData
 
-	Ticket        string `xml:"ticket"`
-	CfgFile       string `xml:"cfgFile"`
-	Host          string `xml:"host,omitempty"`
-	Port          int32  `xml:"port,omitempty"`
-	SslThumbprint string `xml:"sslThumbprint,omitempty"`
-	Url           string `xml:"url,omitempty"`
+	Ticket             string                         `xml:"ticket"`
+	CfgFile            string                         `xml:"cfgFile"`
+	Host               string                         `xml:"host,omitempty"`
+	Port               int32                          `xml:"port,omitempty"`
+	SslThumbprint      string                         `xml:"sslThumbprint,omitempty"`
+	CertThumbprintList []VirtualMachineCertThumbprint `xml:"certThumbprintList,omitempty"`
+	Url                string                         `xml:"url,omitempty"`
 }
 
 func init() {
@@ -54303,6 +54404,36 @@ func init() {
 	t["VirtualMachineVcpuConfig"] = reflect.TypeOf((*VirtualMachineVcpuConfig)(nil)).Elem()
 }
 
+type VirtualMachineVgpuDeviceInfo struct {
+	VirtualMachineTargetInfo
+
+	DeviceName            string `xml:"deviceName"`
+	DeviceVendorId        int64  `xml:"deviceVendorId"`
+	MaxFbSizeInGib        int64  `xml:"maxFbSizeInGib"`
+	TimeSlicedCapable     bool   `xml:"timeSlicedCapable"`
+	MigCapable            bool   `xml:"migCapable"`
+	ComputeProfileCapable bool   `xml:"computeProfileCapable"`
+	QuadroProfileCapable  bool   `xml:"quadroProfileCapable"`
+}
+
+func init() {
+	t["VirtualMachineVgpuDeviceInfo"] = reflect.TypeOf((*VirtualMachineVgpuDeviceInfo)(nil)).Elem()
+}
+
+type VirtualMachineVgpuProfileInfo struct {
+	VirtualMachineTargetInfo
+
+	ProfileName    string `xml:"profileName"`
+	DeviceVendorId int64  `xml:"deviceVendorId"`
+	FbSizeInGib    int64  `xml:"fbSizeInGib"`
+	ProfileSharing string `xml:"profileSharing"`
+	ProfileClass   string `xml:"profileClass"`
+}
+
+func init() {
+	t["VirtualMachineVgpuProfileInfo"] = reflect.TypeOf((*VirtualMachineVgpuProfileInfo)(nil)).Elem()
+}
+
 type VirtualMachineVideoCard struct {
 	VirtualDevice
 
@@ -54316,6 +54447,26 @@ type VirtualMachineVideoCard struct {
 
 func init() {
 	t["VirtualMachineVideoCard"] = reflect.TypeOf((*VirtualMachineVideoCard)(nil)).Elem()
+}
+
+type VirtualMachineVirtualDeviceGroupsDeviceGroup struct {
+	DynamicData
+
+	GroupInstanceKey int32 `xml:"groupInstanceKey"`
+}
+
+func init() {
+	t["VirtualMachineVirtualDeviceGroupsDeviceGroup"] = reflect.TypeOf((*VirtualMachineVirtualDeviceGroupsDeviceGroup)(nil)).Elem()
+}
+
+type VirtualMachineVirtualDeviceGroupsVendorDeviceGroup struct {
+	VirtualMachineVirtualDeviceGroupsDeviceGroup
+
+	DeviceGroupName string `xml:"deviceGroupName"`
+}
+
+func init() {
+	t["VirtualMachineVirtualDeviceGroupsVendorDeviceGroup"] = reflect.TypeOf((*VirtualMachineVirtualDeviceGroupsVendorDeviceGroup)(nil)).Elem()
 }
 
 type VirtualMachineVirtualPMem struct {

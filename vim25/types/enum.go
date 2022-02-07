@@ -1175,6 +1175,16 @@ func init() {
 	t["GuestOsDescriptorSupportLevel"] = reflect.TypeOf((*GuestOsDescriptorSupportLevel)(nil)).Elem()
 }
 
+type GuestQuiesceEndGuestQuiesceError string
+
+const (
+	GuestQuiesceEndGuestQuiesceErrorFailure = GuestQuiesceEndGuestQuiesceError("failure")
+)
+
+func init() {
+	t["GuestQuiesceEndGuestQuiesceError"] = reflect.TypeOf((*GuestQuiesceEndGuestQuiesceError)(nil)).Elem()
+}
+
 type GuestRegKeyWowSpec string
 
 const (
@@ -4236,6 +4246,16 @@ func init() {
 	t["VirtualMachineBootOptionsNetworkBootProtocolType"] = reflect.TypeOf((*VirtualMachineBootOptionsNetworkBootProtocolType)(nil)).Elem()
 }
 
+type VirtualMachineCertThumbprintHashAlgorithm string
+
+const (
+	VirtualMachineCertThumbprintHashAlgorithmSha256 = VirtualMachineCertThumbprintHashAlgorithm("sha256")
+)
+
+func init() {
+	t["VirtualMachineCertThumbprintHashAlgorithm"] = reflect.TypeOf((*VirtualMachineCertThumbprintHashAlgorithm)(nil)).Elem()
+}
+
 type VirtualMachineConfigInfoNpivWwnType string
 
 const (
@@ -4386,29 +4406,31 @@ func init() {
 type VirtualMachineFileLayoutExFileType string
 
 const (
-	VirtualMachineFileLayoutExFileTypeConfig               = VirtualMachineFileLayoutExFileType("config")
-	VirtualMachineFileLayoutExFileTypeExtendedConfig       = VirtualMachineFileLayoutExFileType("extendedConfig")
-	VirtualMachineFileLayoutExFileTypeDiskDescriptor       = VirtualMachineFileLayoutExFileType("diskDescriptor")
-	VirtualMachineFileLayoutExFileTypeDiskExtent           = VirtualMachineFileLayoutExFileType("diskExtent")
-	VirtualMachineFileLayoutExFileTypeDigestDescriptor     = VirtualMachineFileLayoutExFileType("digestDescriptor")
-	VirtualMachineFileLayoutExFileTypeDigestExtent         = VirtualMachineFileLayoutExFileType("digestExtent")
-	VirtualMachineFileLayoutExFileTypeDiskReplicationState = VirtualMachineFileLayoutExFileType("diskReplicationState")
-	VirtualMachineFileLayoutExFileTypeLog                  = VirtualMachineFileLayoutExFileType("log")
-	VirtualMachineFileLayoutExFileTypeStat                 = VirtualMachineFileLayoutExFileType("stat")
-	VirtualMachineFileLayoutExFileTypeNamespaceData        = VirtualMachineFileLayoutExFileType("namespaceData")
-	VirtualMachineFileLayoutExFileTypeNvram                = VirtualMachineFileLayoutExFileType("nvram")
-	VirtualMachineFileLayoutExFileTypeSnapshotData         = VirtualMachineFileLayoutExFileType("snapshotData")
-	VirtualMachineFileLayoutExFileTypeSnapshotMemory       = VirtualMachineFileLayoutExFileType("snapshotMemory")
-	VirtualMachineFileLayoutExFileTypeSnapshotList         = VirtualMachineFileLayoutExFileType("snapshotList")
-	VirtualMachineFileLayoutExFileTypeSnapshotManifestList = VirtualMachineFileLayoutExFileType("snapshotManifestList")
-	VirtualMachineFileLayoutExFileTypeSuspend              = VirtualMachineFileLayoutExFileType("suspend")
-	VirtualMachineFileLayoutExFileTypeSuspendMemory        = VirtualMachineFileLayoutExFileType("suspendMemory")
-	VirtualMachineFileLayoutExFileTypeSwap                 = VirtualMachineFileLayoutExFileType("swap")
-	VirtualMachineFileLayoutExFileTypeUwswap               = VirtualMachineFileLayoutExFileType("uwswap")
-	VirtualMachineFileLayoutExFileTypeCore                 = VirtualMachineFileLayoutExFileType("core")
-	VirtualMachineFileLayoutExFileTypeScreenshot           = VirtualMachineFileLayoutExFileType("screenshot")
-	VirtualMachineFileLayoutExFileTypeFtMetadata           = VirtualMachineFileLayoutExFileType("ftMetadata")
-	VirtualMachineFileLayoutExFileTypeGuestCustomization   = VirtualMachineFileLayoutExFileType("guestCustomization")
+	VirtualMachineFileLayoutExFileTypeConfig                = VirtualMachineFileLayoutExFileType("config")
+	VirtualMachineFileLayoutExFileTypeExtendedConfig        = VirtualMachineFileLayoutExFileType("extendedConfig")
+	VirtualMachineFileLayoutExFileTypeDiskDescriptor        = VirtualMachineFileLayoutExFileType("diskDescriptor")
+	VirtualMachineFileLayoutExFileTypeDiskExtent            = VirtualMachineFileLayoutExFileType("diskExtent")
+	VirtualMachineFileLayoutExFileTypeDigestDescriptor      = VirtualMachineFileLayoutExFileType("digestDescriptor")
+	VirtualMachineFileLayoutExFileTypeDigestExtent          = VirtualMachineFileLayoutExFileType("digestExtent")
+	VirtualMachineFileLayoutExFileTypeDiskReplicationState  = VirtualMachineFileLayoutExFileType("diskReplicationState")
+	VirtualMachineFileLayoutExFileTypeLog                   = VirtualMachineFileLayoutExFileType("log")
+	VirtualMachineFileLayoutExFileTypeStat                  = VirtualMachineFileLayoutExFileType("stat")
+	VirtualMachineFileLayoutExFileTypeNamespaceData         = VirtualMachineFileLayoutExFileType("namespaceData")
+	VirtualMachineFileLayoutExFileTypeDataSetsDiskModeStore = VirtualMachineFileLayoutExFileType("dataSetsDiskModeStore")
+	VirtualMachineFileLayoutExFileTypeDataSetsVmModeStore   = VirtualMachineFileLayoutExFileType("dataSetsVmModeStore")
+	VirtualMachineFileLayoutExFileTypeNvram                 = VirtualMachineFileLayoutExFileType("nvram")
+	VirtualMachineFileLayoutExFileTypeSnapshotData          = VirtualMachineFileLayoutExFileType("snapshotData")
+	VirtualMachineFileLayoutExFileTypeSnapshotMemory        = VirtualMachineFileLayoutExFileType("snapshotMemory")
+	VirtualMachineFileLayoutExFileTypeSnapshotList          = VirtualMachineFileLayoutExFileType("snapshotList")
+	VirtualMachineFileLayoutExFileTypeSnapshotManifestList  = VirtualMachineFileLayoutExFileType("snapshotManifestList")
+	VirtualMachineFileLayoutExFileTypeSuspend               = VirtualMachineFileLayoutExFileType("suspend")
+	VirtualMachineFileLayoutExFileTypeSuspendMemory         = VirtualMachineFileLayoutExFileType("suspendMemory")
+	VirtualMachineFileLayoutExFileTypeSwap                  = VirtualMachineFileLayoutExFileType("swap")
+	VirtualMachineFileLayoutExFileTypeUwswap                = VirtualMachineFileLayoutExFileType("uwswap")
+	VirtualMachineFileLayoutExFileTypeCore                  = VirtualMachineFileLayoutExFileType("core")
+	VirtualMachineFileLayoutExFileTypeScreenshot            = VirtualMachineFileLayoutExFileType("screenshot")
+	VirtualMachineFileLayoutExFileTypeFtMetadata            = VirtualMachineFileLayoutExFileType("ftMetadata")
+	VirtualMachineFileLayoutExFileTypeGuestCustomization    = VirtualMachineFileLayoutExFileType("guestCustomization")
 )
 
 func init() {
@@ -4987,12 +5009,13 @@ func init() {
 type VirtualMachineUsbInfoSpeed string
 
 const (
-	VirtualMachineUsbInfoSpeedLow            = VirtualMachineUsbInfoSpeed("low")
-	VirtualMachineUsbInfoSpeedFull           = VirtualMachineUsbInfoSpeed("full")
-	VirtualMachineUsbInfoSpeedHigh           = VirtualMachineUsbInfoSpeed("high")
-	VirtualMachineUsbInfoSpeedSuperSpeed     = VirtualMachineUsbInfoSpeed("superSpeed")
-	VirtualMachineUsbInfoSpeedSuperSpeedPlus = VirtualMachineUsbInfoSpeed("superSpeedPlus")
-	VirtualMachineUsbInfoSpeedUnknownSpeed   = VirtualMachineUsbInfoSpeed("unknownSpeed")
+	VirtualMachineUsbInfoSpeedLow              = VirtualMachineUsbInfoSpeed("low")
+	VirtualMachineUsbInfoSpeedFull             = VirtualMachineUsbInfoSpeed("full")
+	VirtualMachineUsbInfoSpeedHigh             = VirtualMachineUsbInfoSpeed("high")
+	VirtualMachineUsbInfoSpeedSuperSpeed       = VirtualMachineUsbInfoSpeed("superSpeed")
+	VirtualMachineUsbInfoSpeedSuperSpeedPlus   = VirtualMachineUsbInfoSpeed("superSpeedPlus")
+	VirtualMachineUsbInfoSpeedSuperSpeed20Gbps = VirtualMachineUsbInfoSpeed("superSpeed20Gbps")
+	VirtualMachineUsbInfoSpeedUnknownSpeed     = VirtualMachineUsbInfoSpeed("unknownSpeed")
 )
 
 func init() {
@@ -5035,6 +5058,28 @@ const (
 
 func init() {
 	t["VirtualMachineVMCIDeviceProtocol"] = reflect.TypeOf((*VirtualMachineVMCIDeviceProtocol)(nil)).Elem()
+}
+
+type VirtualMachineVgpuProfileInfoProfileClass string
+
+const (
+	VirtualMachineVgpuProfileInfoProfileClassCompute = VirtualMachineVgpuProfileInfoProfileClass("compute")
+	VirtualMachineVgpuProfileInfoProfileClassQuadro  = VirtualMachineVgpuProfileInfoProfileClass("quadro")
+)
+
+func init() {
+	t["VirtualMachineVgpuProfileInfoProfileClass"] = reflect.TypeOf((*VirtualMachineVgpuProfileInfoProfileClass)(nil)).Elem()
+}
+
+type VirtualMachineVgpuProfileInfoProfileSharing string
+
+const (
+	VirtualMachineVgpuProfileInfoProfileSharingTimeSliced = VirtualMachineVgpuProfileInfoProfileSharing("timeSliced")
+	VirtualMachineVgpuProfileInfoProfileSharingMig        = VirtualMachineVgpuProfileInfoProfileSharing("mig")
+)
+
+func init() {
+	t["VirtualMachineVgpuProfileInfoProfileSharing"] = reflect.TypeOf((*VirtualMachineVgpuProfileInfoProfileSharing)(nil)).Elem()
 }
 
 type VirtualMachineVideoCardUse3dRenderer string

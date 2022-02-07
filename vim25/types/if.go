@@ -3150,6 +3150,18 @@ func init() {
 	t["BaseVirtualMachineTargetInfo"] = reflect.TypeOf((*VirtualMachineTargetInfo)(nil)).Elem()
 }
 
+func (b *VirtualMachineVirtualDeviceGroupsDeviceGroup) GetVirtualMachineVirtualDeviceGroupsDeviceGroup() *VirtualMachineVirtualDeviceGroupsDeviceGroup {
+	return b
+}
+
+type BaseVirtualMachineVirtualDeviceGroupsDeviceGroup interface {
+	GetVirtualMachineVirtualDeviceGroupsDeviceGroup() *VirtualMachineVirtualDeviceGroupsDeviceGroup
+}
+
+func init() {
+	t["BaseVirtualMachineVirtualDeviceGroupsDeviceGroup"] = reflect.TypeOf((*VirtualMachineVirtualDeviceGroupsDeviceGroup)(nil)).Elem()
+}
+
 func (b *VirtualPCIPassthroughPluginBackingInfo) GetVirtualPCIPassthroughPluginBackingInfo() *VirtualPCIPassthroughPluginBackingInfo {
 	return b
 }
