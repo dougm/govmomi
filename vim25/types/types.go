@@ -4756,6 +4756,30 @@ func init() {
 	t["ArrayOfPhysicalNicProfile"] = reflect.TypeOf((*ArrayOfPhysicalNicProfile)(nil)).Elem()
 }
 
+type ArrayOfPlaceVmsXClusterResultPlacementFaults struct {
+	PlaceVmsXClusterResultPlacementFaults []PlaceVmsXClusterResultPlacementFaults `xml:"PlaceVmsXClusterResultPlacementFaults,omitempty"`
+}
+
+func init() {
+	t["ArrayOfPlaceVmsXClusterResultPlacementFaults"] = reflect.TypeOf((*ArrayOfPlaceVmsXClusterResultPlacementFaults)(nil)).Elem()
+}
+
+type ArrayOfPlaceVmsXClusterResultPlacementInfo struct {
+	PlaceVmsXClusterResultPlacementInfo []PlaceVmsXClusterResultPlacementInfo `xml:"PlaceVmsXClusterResultPlacementInfo,omitempty"`
+}
+
+func init() {
+	t["ArrayOfPlaceVmsXClusterResultPlacementInfo"] = reflect.TypeOf((*ArrayOfPlaceVmsXClusterResultPlacementInfo)(nil)).Elem()
+}
+
+type ArrayOfPlaceVmsXClusterSpecVmPlacementSpec struct {
+	PlaceVmsXClusterSpecVmPlacementSpec []PlaceVmsXClusterSpecVmPlacementSpec `xml:"PlaceVmsXClusterSpecVmPlacementSpec,omitempty"`
+}
+
+func init() {
+	t["ArrayOfPlaceVmsXClusterSpecVmPlacementSpec"] = reflect.TypeOf((*ArrayOfPlaceVmsXClusterSpecVmPlacementSpec)(nil)).Elem()
+}
+
 type ArrayOfPlacementAffinityRule struct {
 	PlacementAffinityRule []PlacementAffinityRule `xml:"PlacementAffinityRule,omitempty"`
 }
@@ -37097,6 +37121,80 @@ func init() {
 
 type PlaceVmResponse struct {
 	Returnval PlacementResult `xml:"returnval"`
+}
+
+type PlaceVmsXCluster PlaceVmsXClusterRequestType
+
+func init() {
+	t["PlaceVmsXCluster"] = reflect.TypeOf((*PlaceVmsXCluster)(nil)).Elem()
+}
+
+type PlaceVmsXClusterRequestType struct {
+	This          ManagedObjectReference `xml:"_this"`
+	PlacementSpec PlaceVmsXClusterSpec   `xml:"placementSpec"`
+}
+
+func init() {
+	t["PlaceVmsXClusterRequestType"] = reflect.TypeOf((*PlaceVmsXClusterRequestType)(nil)).Elem()
+}
+
+type PlaceVmsXClusterResponse struct {
+	Returnval PlaceVmsXClusterResult `xml:"returnval"`
+}
+
+type PlaceVmsXClusterResult struct {
+	DynamicData
+
+	PlacementInfos []PlaceVmsXClusterResultPlacementInfo   `xml:"placementInfos,omitempty"`
+	Faults         []PlaceVmsXClusterResultPlacementFaults `xml:"faults,omitempty"`
+}
+
+func init() {
+	t["PlaceVmsXClusterResult"] = reflect.TypeOf((*PlaceVmsXClusterResult)(nil)).Elem()
+}
+
+type PlaceVmsXClusterResultPlacementFaults struct {
+	DynamicData
+
+	ResourcePool ManagedObjectReference `xml:"resourcePool"`
+	VmName       string                 `xml:"vmName"`
+	Faults       []LocalizedMethodFault `xml:"faults,omitempty"`
+}
+
+func init() {
+	t["PlaceVmsXClusterResultPlacementFaults"] = reflect.TypeOf((*PlaceVmsXClusterResultPlacementFaults)(nil)).Elem()
+}
+
+type PlaceVmsXClusterResultPlacementInfo struct {
+	DynamicData
+
+	VmName         string                `xml:"vmName"`
+	Recommendation ClusterRecommendation `xml:"recommendation"`
+}
+
+func init() {
+	t["PlaceVmsXClusterResultPlacementInfo"] = reflect.TypeOf((*PlaceVmsXClusterResultPlacementInfo)(nil)).Elem()
+}
+
+type PlaceVmsXClusterSpec struct {
+	DynamicData
+
+	ResourcePools    []ManagedObjectReference              `xml:"resourcePools,omitempty"`
+	VmPlacementSpecs []PlaceVmsXClusterSpecVmPlacementSpec `xml:"vmPlacementSpecs,omitempty"`
+}
+
+func init() {
+	t["PlaceVmsXClusterSpec"] = reflect.TypeOf((*PlaceVmsXClusterSpec)(nil)).Elem()
+}
+
+type PlaceVmsXClusterSpecVmPlacementSpec struct {
+	DynamicData
+
+	ConfigSpec VirtualMachineConfigSpec `xml:"configSpec"`
+}
+
+func init() {
+	t["PlaceVmsXClusterSpecVmPlacementSpec"] = reflect.TypeOf((*PlaceVmsXClusterSpecVmPlacementSpec)(nil)).Elem()
 }
 
 type PlacementAction struct {

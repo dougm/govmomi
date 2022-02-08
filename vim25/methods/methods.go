@@ -9023,6 +9023,26 @@ func PlaceVm(ctx context.Context, r soap.RoundTripper, req *types.PlaceVm) (*typ
 	return resBody.Res, nil
 }
 
+type PlaceVmsXClusterBody struct {
+	Req    *types.PlaceVmsXCluster         `xml:"urn:vim25 PlaceVmsXCluster,omitempty"`
+	Res    *types.PlaceVmsXClusterResponse `xml:"PlaceVmsXClusterResponse,omitempty"`
+	Fault_ *soap.Fault                     `xml:"http://schemas.xmlsoap.org/soap/envelope/ Fault,omitempty"`
+}
+
+func (b *PlaceVmsXClusterBody) Fault() *soap.Fault { return b.Fault_ }
+
+func PlaceVmsXCluster(ctx context.Context, r soap.RoundTripper, req *types.PlaceVmsXCluster) (*types.PlaceVmsXClusterResponse, error) {
+	var reqBody, resBody PlaceVmsXClusterBody
+
+	reqBody.Req = req
+
+	if err := r.RoundTrip(ctx, &reqBody, &resBody); err != nil {
+		return nil, err
+	}
+
+	return resBody.Res, nil
+}
+
 type PostEventBody struct {
 	Req    *types.PostEvent         `xml:"urn:vim25 PostEvent,omitempty"`
 	Res    *types.PostEventResponse `xml:"PostEventResponse,omitempty"`
