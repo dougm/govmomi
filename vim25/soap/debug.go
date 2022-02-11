@@ -120,9 +120,9 @@ var cn uint64 // Client counter
 
 // debugContainer wraps the debugging state for a single client.
 type debugContainer struct {
-	cn  uint64         // Client number
-	rn  uint64         // Request counter
-	log io.WriteCloser // Request log
+	cn  uint64 // Client number
+	rn  uint64 // Request counter
+	log string // Request log
 }
 
 func newDebug() *debugContainer {
@@ -135,7 +135,7 @@ func newDebug() *debugContainer {
 		return nil
 	}
 
-	d.log = debug.NewFile(fmt.Sprintf("%d-client.log", d.cn))
+	d.log = fmt.Sprintf("%d-client.log", d.cn)
 	return &d
 }
 
@@ -147,8 +147,10 @@ func (d *debugContainer) newRoundTrip() *debugRoundTrip {
 	drt := debugRoundTrip{
 		cn:  d.cn,
 		rn:  atomic.AddUint64(&d.rn, 1),
-		log: d.log,
+		log: debug.NewFile(d.log, true),
 	}
+
+	drt.cs = append(drt.cs, drt.log)
 
 	return &drt
 }

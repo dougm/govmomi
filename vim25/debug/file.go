@@ -20,7 +20,6 @@ import (
 	"io"
 	"os"
 	"path"
-	"sync"
 )
 
 // FileProvider implements a debugging provider that creates a real file for
@@ -28,30 +27,22 @@ import (
 // such that it can close them when its Flush function is called.
 type FileProvider struct {
 	Path string
-
-	mu    sync.Mutex
-	files []*os.File
 }
 
-func (fp *FileProvider) NewFile(p string) io.WriteCloser {
-	f, err := os.Create(path.Join(fp.Path, p))
+func (fp *FileProvider) NewFile(p string, append ...bool) io.WriteCloser {
+	flag := os.O_RDWR | os.O_CREATE
+	if len(append) == 1 && append[0] {
+		flag |= os.O_APPEND
+	} else {
+		flag |= os.O_TRUNC
+	}
+
+	f, err := os.OpenFile(path.Join(fp.Path, p), flag, 0600)
 	if err != nil {
 		panic(err)
 	}
 
-	fp.mu.Lock()
-	defer fp.mu.Unlock()
-	fp.files = append(fp.files, f)
-
 	return NewFileWriterCloser(f, p)
-}
-
-func (fp *FileProvider) Flush() {
-	fp.mu.Lock()
-	defer fp.mu.Unlock()
-	for _, f := range fp.files {
-		f.Close()
-	}
 }
 
 type FileWriterCloser struct {

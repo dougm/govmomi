@@ -41,9 +41,6 @@ func (lwc *LogWriterCloser) Close() error {
 type LogProvider struct {
 }
 
-func (s *LogProvider) NewFile(p string) io.WriteCloser {
+func (s *LogProvider) NewFile(p string, append ...bool) io.WriteCloser {
 	return NewLogWriterCloser()
-}
-
-func (s *LogProvider) Flush() {
 }

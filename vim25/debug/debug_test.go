@@ -18,7 +18,10 @@ package debug_test
 
 import (
 	"context"
+	"fmt"
 	"net/http"
+	"os"
+	"os/exec"
 	"sync"
 	"testing"
 
@@ -69,6 +72,13 @@ func TestSetProvider(t *testing.T) {
 		var id string
 		if err = rc.Do(ctx, req, &id); err != nil {
 			t.Fatal(err)
+		}
+
+		cmd := exec.Command("lsof", "-p", fmt.Sprintf("%d", os.Getpid()))
+		cmd.Stdout = os.Stdout
+		err = cmd.Run()
+		if err != nil {
+			t.Error(err)
 		}
 	})
 }

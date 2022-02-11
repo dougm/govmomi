@@ -25,8 +25,7 @@ import (
 // debugging sink. Having multiple such sink implementations allows it to be
 // changed externally (for example when running tests).
 type Provider interface {
-	NewFile(s string) io.WriteCloser
-	Flush()
+	NewFile(s string, append ...bool) io.WriteCloser
 }
 
 // ReadCloser is a struct that satisfies the io.ReadCloser interface
@@ -47,9 +46,6 @@ var currentProvider Provider = nil
 var scrubPassword = regexp.MustCompile(`<password>(.*)</password>`)
 
 func SetProvider(p Provider) {
-	if currentProvider != nil {
-		currentProvider.Flush()
-	}
 	currentProvider = p
 }
 
@@ -59,13 +55,8 @@ func Enabled() bool {
 }
 
 // NewFile dispatches to the current provider's NewFile function.
-func NewFile(s string) io.WriteCloser {
-	return currentProvider.NewFile(s)
-}
-
-// Flush dispatches to the current provider's Flush function.
-func Flush() {
-	currentProvider.Flush()
+func NewFile(s string, append ...bool) io.WriteCloser {
+	return currentProvider.NewFile(s, append...)
 }
 
 func Scrub(in []byte) []byte {
