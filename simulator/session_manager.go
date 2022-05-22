@@ -29,6 +29,7 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/vmware/govmomi/session"
+	"github.com/vmware/govmomi/vim25"
 	"github.com/vmware/govmomi/vim25/methods"
 	"github.com/vmware/govmomi/vim25/mo"
 	"github.com/vmware/govmomi/vim25/soap"
@@ -294,6 +295,10 @@ type Context struct {
 	Header  soap.Header
 	Caller  *types.ManagedObjectReference
 	Map     *Registry
+}
+
+func (c *Context) Client() *vim25.Client {
+	return c.svc.client
 }
 
 // mapSession maps an HTTP cookie to a Session.
