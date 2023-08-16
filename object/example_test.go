@@ -27,6 +27,7 @@ import (
 	"github.com/vmware/govmomi/simulator"
 	"github.com/vmware/govmomi/view"
 	"github.com/vmware/govmomi/vim25"
+	"github.com/vmware/govmomi/vim25/methods"
 	"github.com/vmware/govmomi/vim25/mo"
 	"github.com/vmware/govmomi/vim25/types"
 )
@@ -320,6 +321,45 @@ func ExampleFolder_CreateVM() {
 		return nil
 	})
 	// Output: example-vm
+}
+
+// This example uses the VIM generated code to create a folder
+func Example_createFolderUsingGeneratedCode() {
+	simulator.Run(func(ctx context.Context, c *vim25.Client) error {
+		req := types.CreateFolder{
+			This: c.ServiceContent.RootFolder,
+			Name: "using-generated-code",
+		}
+
+		res, err := methods.CreateFolder(ctx, c, &req)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(res.Returnval.Type, "created")
+
+		return nil
+	})
+	// Output: Folder created
+}
+
+// This example uses the object package helpers to create a folder
+func Example_createFolderUsingHelpers() {
+	simulator.Run(func(ctx context.Context, c *vim25.Client) error {
+		// c.ServiceContent.RootFolder
+		root := object.NewRootFolder(c)
+
+		// Uses the generated {types,methods}.CreateFolder underneath
+		folder, err := root.CreateFolder(ctx, "using-helper-code")
+		if err != nil {
+			return err
+		}
+
+		fmt.Println(folder.Reference().Type, "created")
+
+		return nil
+	})
+	// Output: Folder created
 }
 
 func ExampleVirtualMachine_Reconfigure() {
