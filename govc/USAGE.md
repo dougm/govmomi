@@ -1141,11 +1141,13 @@ Cluster resource usage summary.
 
 Examples:
   govc cluster.usage ClusterName
+  govc cluster.usage -i month ClusterName # usage for past month
   govc cluster.usage -S ClusterName # summarize shared storage only
   govc cluster.usage -json ClusterName | jq -r .cpu.summary.usage
 
 Options:
   -S=false               Exclude host local storage
+  -i=                    Historical interval (day|week|month|year)
 ```
 
 ## cluster.vlcm.enable
@@ -1361,7 +1363,7 @@ Options:
   -d=thin                Disk format
   -ds=                   Datastore [GOVC_DATASTORE]
   -f=false               Force
-  -size=10.0GB           Size of new disk
+  -size=10.00GB          Size of new disk
   -uuid=                 Disk UUID
 ```
 
@@ -2131,7 +2133,7 @@ Options:
   -keep=<nil>            Keep disk after VM is deleted
   -pool=                 Resource pool [GOVC_RESOURCE_POOL]
   -profile=[]            Storage profile name or ID
-  -size=10.0GB           Size of new disk
+  -size=10.00GB          Size of new disk
 ```
 
 ## disk.detach
@@ -7159,7 +7161,7 @@ Options:
   -name=                 Name for new disk
   -profile=[]            Storage profile name or ID
   -sharing=              Sharing (sharingNone|sharingMultiWriter)
-  -size=10.0GB           Size of new disk
+  -size=10.00GB          Size of new disk
   -thick=false           Thick provision new disk
   -vm=                   Virtual machine [GOVC_VM]
 ```

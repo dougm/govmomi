@@ -26,17 +26,17 @@ const (
 func (b ByteSize) String() string {
 	switch {
 	case b >= EB:
-		return fmt.Sprintf("%.1fEB", float32(b)/EB)
+		return fmt.Sprintf("%.2fEB", float32(b)/EB)
 	case b >= PB:
-		return fmt.Sprintf("%.1fPB", float32(b)/PB)
+		return fmt.Sprintf("%.2fPB", float32(b)/PB)
 	case b >= TB:
-		return fmt.Sprintf("%.1fTB", float32(b)/TB)
+		return fmt.Sprintf("%.2fTB", float32(b)/TB)
 	case b >= GB:
-		return fmt.Sprintf("%.1fGB", float32(b)/GB)
+		return fmt.Sprintf("%.2fGB", float32(b)/GB)
 	case b >= MB:
-		return fmt.Sprintf("%.1fMB", float32(b)/MB)
+		return fmt.Sprintf("%.2fMB", float32(b)/MB)
 	case b >= KB:
-		return fmt.Sprintf("%.1fKB", float32(b)/KB)
+		return fmt.Sprintf("%.2fKB", float32(b)/KB)
 	}
 	return fmt.Sprintf("%dB", b)
 }
@@ -46,17 +46,17 @@ type FileSize int64
 func (b FileSize) String() string {
 	switch {
 	case b >= EB:
-		return fmt.Sprintf("%.1fE", float32(b)/EB)
+		return fmt.Sprintf("%.2fE", float32(b)/EB)
 	case b >= PB:
-		return fmt.Sprintf("%.1fP", float32(b)/PB)
+		return fmt.Sprintf("%.2fP", float32(b)/PB)
 	case b >= TB:
-		return fmt.Sprintf("%.1fT", float32(b)/TB)
+		return fmt.Sprintf("%.2fT", float32(b)/TB)
 	case b >= GB:
-		return fmt.Sprintf("%.1fG", float32(b)/GB)
+		return fmt.Sprintf("%.2fG", float32(b)/GB)
 	case b >= MB:
-		return fmt.Sprintf("%.1fM", float32(b)/MB)
+		return fmt.Sprintf("%.2fM", float32(b)/MB)
 	case b >= KB:
-		return fmt.Sprintf("%.1fK", float32(b)/KB)
+		return fmt.Sprintf("%.2fK", float32(b)/KB)
 	}
 	return fmt.Sprintf("%d", b)
 }
